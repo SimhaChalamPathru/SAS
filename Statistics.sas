@@ -124,5 +124,37 @@ tables make type;
 weight horsepower;
 run;
 
+/* Croostables*/
+/*In SAS it is created using PROC FREQ along with the TABLES option*/
+/*Syntax*/
+ 
+PROC FREQ DATA = dataset;
+TABLES variable_1*Variable_2;
 
+*Example-1;
+
+PROC SQL;
+create table CARS1 as
+SELECT make, type, Model,invoice, horsepower, length, weight
+   FROM 
+   SASHELP.CARS
+   WHERE make in ('Audi','BMW')
+;
+RUN;
+
+proc FREQ data = CARS1;
+tables make*type; 
+run;
+
+/* Cross - Tables of # variables */
+
+proc FREQ data = CARS1 ;
+tables make * (type Model )  / nocol norow nopercent;   
+run;
+
+/* Cross - Tables of 4 variables*/
+
+proc FREQ data = CARS1 ;
+tables (make model) * (length  horsepower)  / nocol norow nopercent;   
+run;
 
